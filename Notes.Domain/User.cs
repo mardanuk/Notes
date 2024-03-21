@@ -7,8 +7,8 @@ namespace Notes.Domain
     internal class User
     {
         [Key]
-        [Column("login")]
-        public required string Login { get; set; }
+        [Column("id")]
+        public int Id { get; set; }
 
         [Column("name")]
         public required string Name { get; set; }

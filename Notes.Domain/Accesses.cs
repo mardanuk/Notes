@@ -7,8 +7,8 @@ namespace Notes.Domain
     internal class Accesses
     {
         [Key]
-        [Column("login")]
-        public required string Login { get; set; }
+        [Column("id")]
+        public int Id { get; set; }
         
         [Key]
         [Column("header")]
