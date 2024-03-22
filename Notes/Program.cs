@@ -5,8 +5,6 @@ using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
 using Notes.Domain.Options;
 using Notes.Repository;
-using Presentation.Configurations;
-using System;
 
 namespace Notes
 {

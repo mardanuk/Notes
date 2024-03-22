@@ -12,16 +12,16 @@ namespace Notes.BusinessLogic
             _repository = repository;
         }
 
-        public async Task<User?> AddAccess(string header, int id)
+        public async Task<bool> AddAccess(string header, int userid)
         {
             return string.IsNullOrWhiteSpace(header)
-                 ? await _repository.AddAccess(header, id)
-                 : null;
+                 ? await _repository.AddAccess(header, userid)
+                 : false;
         }
 
-        public async Task<ICollection<Note>?> GetNotes(int id)
+        public async Task<ICollection<Note>?> GetNotes(int userid)
         {
-            return await _repository.GetNotes(id);
+            return await _repository.GetNotes(userid);
         }
 
         public async Task<ICollection<User>?> GetUsers(string header)

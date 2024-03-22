@@ -26,10 +26,10 @@ namespace Presentation.Controllers
         }
 
         // GET users/1
-        [HttpGet("{id}")]
-        public async Task<ActionResult<NoteDto>> Get(int id)
+        [HttpGet("{userid}")]
+        public async Task<ActionResult<NoteDto>> Get(int userid)
         {
-            var user = await _usersProceed.GetUser(id);
+            var user = await _usersProceed.GetUser(userid);
             return Ok(user.Adapt<UserDto>());
         }
 

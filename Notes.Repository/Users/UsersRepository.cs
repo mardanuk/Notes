@@ -29,9 +29,9 @@ namespace Notes.Repository
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User?> GetUser(int id)
+        public async Task<User?> GetUser(int userid)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == userid);
         }
     }
 }

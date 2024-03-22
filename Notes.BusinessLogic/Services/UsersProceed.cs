@@ -2,7 +2,6 @@
 using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
 using Notes.Repository;
-using System.Reflection.PortableExecutable;
 
 namespace Notes.BusinessLogic
 {
@@ -29,9 +28,9 @@ namespace Notes.BusinessLogic
             return await _repository.GetAllUsers();
         }
 
-        public async Task<User?> GetUser(int id)
+        public async Task<User?> GetUser(int userid)
         {
-            return await _repository.GetUser(id);
+            return await _repository.GetUser(userid);
         }
     }
 }

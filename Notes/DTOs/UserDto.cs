@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Presentation.DTOs
+﻿namespace Presentation.DTOs
 {
     public class UserDto
     {
