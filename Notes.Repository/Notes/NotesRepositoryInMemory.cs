@@ -1,5 +1,4 @@
 ﻿using Notes.Domain;
-using Microsoft.EntityFrameworkCore;
 
 namespace Notes.Repository
 {
@@ -26,6 +25,17 @@ namespace Notes.Repository
         public async Task<Note?> GetNote(string header)
         {
             return Notes.FirstOrDefault(x => x.Header == header);
+        }
+
+
+        Task<Note?> INotesRepository.AddAccess(Note note, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ICollection<User>> INotesRepository.GetUsers(Note note)
+        {
+            throw new NotImplementedException();
         }
     }
 }

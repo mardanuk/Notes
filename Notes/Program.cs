@@ -3,7 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Notes.BusinessLogic;
 using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
+using Notes.Domain.Options;
 using Notes.Repository;
+using Presentation.Configurations;
+using System;
 
 namespace Notes
 {
@@ -13,7 +16,11 @@ namespace Notes
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //string? connection = builder.Configuration.GetConnectionString("NoteDbConnection");
+            //конфигурация
+            builder.Configuration.AddJsonFile("Configurations/Configuration.json");
+            builder.Services.Configure<PageConfiguration>(
+                builder.Configuration.GetSection("PageProperties"));
+
             string? connection = builder.Configuration.GetConnectionString("NoteDbConnectionWithoutDocker");
 
             builder.Services.AddDbContext<NotesContext>(options => options.UseNpgsql(connection));
@@ -23,9 +30,12 @@ namespace Notes
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<INotesProceed, NotesProceed>();
-            //builder.Services.AddSingleton<INotesRepository, NotesRepositoryInMemory>();
+            builder.Services.AddScoped<IUsersProceed, UsersProceed>();
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IValidator<Note>, NoteValidator>();
+            builder.Services.AddScoped<IValidator<User>, UserValidator>();
+
 
             var app = builder.Build();
 

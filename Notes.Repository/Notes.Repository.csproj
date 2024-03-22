@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Notes.Domain\Notes.Domain.csproj" />
+    <ProjectReference Include="..\Notes.Repository.Abstraction\Notes.Repository.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>
