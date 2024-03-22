@@ -26,16 +26,5 @@ namespace Notes.Repository
         {
             return Notes.FirstOrDefault(x => x.Header == header);
         }
-
-
-        Task<Note?> INotesRepository.AddAccess(Note note, User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<ICollection<User>> INotesRepository.GetUsers(Note note)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -36,7 +36,11 @@ namespace Notes.Repository
 
                 e.HasMany(t => t.Notes)
                 .WithMany(t => t.Users)
-                .UsingEntity(t => t.ToTable("accesses"));
+                .UsingEntity(t => {
+                    t.ToTable("accesses");
+                    //t.HasOne(typeof(Note)).WithMany().HasForeignKey("header");
+                    //t.HasOne(typeof(User)).WithMany().HasForeignKey("id");
+                });
             });
 
             base.OnModelCreating(modelBuilder);

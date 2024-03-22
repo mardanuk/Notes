@@ -31,8 +31,12 @@ namespace Notes
 
             builder.Services.AddScoped<INotesProceed, NotesProceed>();
             builder.Services.AddScoped<IUsersProceed, UsersProceed>();
+            builder.Services.AddScoped<IAccessesProceed, AccessesProceed>();
+
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IAccessesRepository, AccessesRepository>();
+
             builder.Services.AddScoped<IValidator<Note>, NoteValidator>();
             builder.Services.AddScoped<IValidator<User>, UserValidator>();
 

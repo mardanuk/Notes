@@ -40,21 +40,5 @@ namespace Presentation.Controllers
             var _note = await _notesProceed.CreateNote(note.Adapt<Note>());
             return Ok(_note.Adapt<NoteDto>());
         }
-
-        //// GET notes/
-        //[HttpGet]
-        //public async Task<ActionResult> GetNotes(NoteDto note)
-        //{
-        //    var _users = await _notesProceed.GetUsers(note.Adapt<Note>());
-        //    return Ok(_users.Select(x => x.Adapt<UserDto>()));
-        //}
-
-        //// PUT notes/
-        //[HttpPut("{note}/{user}")]
-        //public async Task<ActionResult> AddAccess(NoteDto note, UserDto user)
-        //{
-        //    var _users = await _notesProceed.AddAccess(note.Adapt<Note>(), user.Adapt<User>());
-        //    return Ok(_users.Adapt<NoteDto>());
-        //}
     }
 }
