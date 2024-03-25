@@ -1,32 +1,29 @@
-﻿////using Notes.Domain;
-////using System.Collections.Concurrent;
-////using System.Collections.Generic;
+﻿namespace Notes.Repository.Notes;
 
-////namespace Notes.Repository.Notes
-////{
-////    public class NotesRepositoryInMemory : INotesRepository
-////    {
-////        public ConcurrentDictionary<string, Note> Notes = new ConcurrentDictionary<string, Note> ();
+using System.Collections.Concurrent;
+using Domain;
+using global::Notes.Repository.Abstracion;
 
-////        public async Task<Note?> CreateNote(Note note)
-////        {
-////            var exitingNote = Notes.SingleOrDefault(x => x.Header == note.Header);
+public class NotesRepositoryInMemory : INotesRepository
+{
+    private ConcurrentDictionary<string, Note> _notes =
+        new ConcurrentDictionary<string, Note>();
 
-////            if (exitingNote != null) return null;
+    public Task<Note> CreateNote(Note note)
+    {
+        ArgumentNullException.ThrowIfNull(note);
+        return Task.Run(() => _notes.TryAdd(note.Header, note) ? note : throw new Exception());
+    }
 
-////            Notes.Add(note);
+    public Task<ICollection<Note>> GetAllNotes() => Task.Run(() => _notes.Values);
 
-////            return note;
-////        }
+    public Task DeleteNote(string header) => Task.Run(() => _notes.TryRemove(header, out _));
 
-////        public async Task<ICollection<Note>> GetAllNotes()
-////        {
-////            return Notes.ToList();
-////        }
+    public Task UpdateNote(Note note)
+    {
+        ArgumentNullException.ThrowIfNull(note);
+        return Task.Run(() => _notes.AddOrUpdate(note.Header, note, (_, _) => note));
+    }
 
-////        public async Task<Note?> GetNote(string header)
-////        {
-////            return Notes.FirstOrDefault(x => x.Header == header);
-////        }
-////    }
-////}
+    public Task<Note?> GetNote(string header) => Task.FromResult(_notes.GetValueOrDefault(header));
+}
