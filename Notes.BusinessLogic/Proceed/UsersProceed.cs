@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
-using Notes.Repository;
+using Notes.Repository.Abstracion;
 
-namespace Notes.BusinessLogic
+namespace Notes.BusinessLogic.Proceed
 {
     public class UsersProceed : IUsersProceed
     {

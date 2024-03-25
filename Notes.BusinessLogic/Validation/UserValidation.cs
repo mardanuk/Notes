@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Notes.Domain;
 
-namespace Notes.BusinessLogic
+namespace Notes.BusinessLogic.Validation
 {
     public class UserValidator : AbstractValidator<User>
     {

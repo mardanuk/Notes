@@ -1,13 +1,14 @@
 ﻿using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
+using Notes.Repository.Abstracion;
 
-namespace Notes.BusinessLogic
+namespace Notes.BusinessLogic.Proceed
 {
     public class AccessesProceed : IAccessesProceed
     {
-        private readonly IAccessesProceed _repository;
+        private readonly IAccessesRepository _repository;
 
-        public AccessesProceed(IAccessesProceed repository)
+        public AccessesProceed(IAccessesRepository repository)
         {
             _repository = repository;
         }

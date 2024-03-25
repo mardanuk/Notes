@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.BusinessLogic.Abstrac
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7AA3D1B6-59DB-456B-BDD2-D4C2504F9A4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrator", "..\Migrator\Migrator.csproj", "{FF25FF36-0483-42A3-A753-03EBBDC4D132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Migrator", "..\Migrator\Notes.Migrator.csproj", "{FF25FF36-0483-42A3-A753-03EBBDC4D132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Repository.Abstraction", "Notes.Repository.Abstraction\Notes.Repository.Abstraction.csproj", "{5240CF68-2EB6-4BD2-83B6-323D6CCA9BF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Repository.Abstraction", "Notes.Repository.Abstraction\Notes.Repository.Abstraction.csproj", "{5240CF68-2EB6-4BD2-83B6-323D6CCA9BF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

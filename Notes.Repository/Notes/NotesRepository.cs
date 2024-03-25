@@ -2,8 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Notes.Domain.Options;
+using Notes.Repository.Abstracion;
 
-namespace Notes.Repository
+namespace Notes.Repository.Notes
 {
     public class NotesRepository : INotesRepository
     {

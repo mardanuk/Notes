@@ -32,8 +32,8 @@ namespace Presentation.Controllers
             return Ok(_users?.Select(x => x.Adapt<UserDto>()));
         }
 
-        // PUT accesses/note1/1
-        [HttpPut("{header}/{userid}")]
+        // PUT accesses/header/note1/userid/1
+        [HttpPut("header/{header}/userid/{userid}")]
         public async Task<ActionResult> AddAccess(string header, int userid)
         {
             var result = await _accessesProceed.AddAccess(header, userid);

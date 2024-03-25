@@ -1,10 +1,15 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Notes.BusinessLogic;
 using Notes.BusinessLogic.Abstraction;
+using Notes.BusinessLogic.Proceed;
+using Notes.BusinessLogic.Validation;
 using Notes.Domain;
 using Notes.Domain.Options;
 using Notes.Repository;
+using Notes.Repository.Abstracion;
+using Notes.Repository.Accesses;
+using Notes.Repository.Notes;
+using Notes.Repository.Users;
 
 namespace Notes
 {

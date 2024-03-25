@@ -1,7 +1,8 @@
 ﻿using Notes.Domain;
 using Microsoft.EntityFrameworkCore;
+using Notes.Repository.Abstracion;
 
-namespace Notes.Repository
+namespace Notes.Repository.Users
 {
     public class UsersRepository : IUsersRepository
     {

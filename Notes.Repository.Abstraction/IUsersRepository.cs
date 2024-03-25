@@ -1,6 +1,6 @@
 ﻿using Notes.Domain;
 
-namespace Notes.Repository
+namespace Notes.Repository.Abstracion
 {
     public interface IUsersRepository
     {
