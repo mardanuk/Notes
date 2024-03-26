@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Notes\Notes.Repository\Notes.Repository.csproj" />
+    <ProjectReference Include="..\Notes.Repository\Notes.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
