@@ -15,24 +15,45 @@ namespace Notes.BusinessLogic.Proceed
             _repository = repository;
             _noteValidator = noteValidator;
         }
-
-        public async Task<Note?> CreateNote(Note note)
+        /// <summary>
+        /// Создает заметку
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns>Значения могут быть Ok, NotValid, NullValue</returns>
+        public async Task<Result<Note>> CreateNote(Note note)
         {
             return _noteValidator.Validate(note).IsValid
                 ? await _repository.CreateNote(note) 
-                : null;
+                : new Result<Note>() { Status = Status.NotValid };
         }
-
+        /// <summary>
+        /// Возвращает все заметки
+        /// </summary>
+        /// <returns></returns>
         public async Task<ICollection<Note>> GetAllNotes()
         {
             return await _repository.GetAllNotes();
         }
-
-        public async Task<Note?> GetNote(string header)
+        /// <summary>
+        /// Находит заметку по заголовку
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns>Значения могут быть Ok, NotValid</returns>
+        public async Task<Result<Note>> GetNote(string header)
         {
             return string.IsNullOrWhiteSpace(header)
-                ? null
+                ? new Result<Note>() { Status = Status.NotValid }
                 : await _repository.GetNote(header);
+        }
+
+        Task<Result<Note>> INotesProceed.DeleteNote(string header)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Result<Note>> INotesProceed.UpdateNote(Note note)
+        {
+            throw new NotImplementedException();
         }
     }
 }

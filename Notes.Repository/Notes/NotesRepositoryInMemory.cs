@@ -9,21 +9,54 @@ public class NotesRepositoryInMemory : INotesRepository
     private ConcurrentDictionary<string, Note> _notes =
         new ConcurrentDictionary<string, Note>();
 
-    public Task<Note> CreateNote(Note note)
-    {
-        ArgumentNullException.ThrowIfNull(note);
-        return Task.Run(() => _notes.TryAdd(note.Header, note) ? note : throw new Exception());
-    }
 
     public Task<ICollection<Note>> GetAllNotes() => Task.Run(() => _notes.Values);
 
-    public Task DeleteNote(string header) => Task.Run(() => _notes.TryRemove(header, out _));
+    public Task<Note?> GetNote(string header) => Task.FromResult(_notes.GetValueOrDefault(header));
 
-    public Task UpdateNote(Note note)
+    Task<Result<Note>> INotesRepository.GetNote(string header)
     {
-        ArgumentNullException.ThrowIfNull(note);
-        return Task.Run(() => _notes.AddOrUpdate(note.Header, note, (_, _) => note));
+        throw new NotImplementedException();
     }
 
-    public Task<Note?> GetNote(string header) => Task.FromResult(_notes.GetValueOrDefault(header));
+    public Task<Result<Note>> CreateNote(Note note)
+    {
+        Result<Note> result = new Result<Note>();
+        if (note == null)
+        {
+            result.Status = Status.NullValue;
+        }
+        else if (_notes.TryAdd(note.Header, note)) 
+        {
+            result.Value = note;
+        }
+        else 
+        { 
+            result.Status = Status.Undefined; 
+        }
+
+        return Task.FromResult(result);
+    }
+
+    public Task<Result<Note>> UpdateNote(Note note)
+    {
+        Result<Note> result = new Result<Note>();
+        if (note == null)
+        {
+            result.Status = Status.NullValue;
+            return Task.FromResult(result);
+        }
+        _notes.AddOrUpdate(note.Header, note, (_, _) => note);
+        return Task.FromResult(result);
+    }
+
+    public Task<Result<Note>> DeleteNote(string header)
+    {
+        Result<Note> result = new Result<Note>();
+        if (!_notes.TryRemove(header, out _))
+        {
+            result.Status = Status.Undefined;
+        }
+        return Task.FromResult(result);
+    }
 }

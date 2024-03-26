@@ -30,7 +30,7 @@ namespace Presentation.Controllers
         public async Task<ActionResult<NoteDto>> Get(string header)
         {
             var note = await _notesProceed.GetNote(header);
-            return Ok(note.Adapt<NoteDto>());
+            return Ok(note.Value?.Adapt<NoteDto>());
         }
 
         // PUT notes/
@@ -38,7 +38,7 @@ namespace Presentation.Controllers
         public async Task<ActionResult> Put(NoteDto note)
         {
             var _note = await _notesProceed.CreateNote(note.Adapt<Note>());
-            return Ok(_note.Adapt<NoteDto>());
+            return Ok(_note.Value?.Adapt<NoteDto>());
         }
     }
 }
