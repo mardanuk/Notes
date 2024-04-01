@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Notes\Presentation.csproj", "{2E6003FE-D8E8-459B-B0A2-13F63A4784B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Presentation", "Notes\Notes.Presentation.csproj", "{2E6003FE-D8E8-459B-B0A2-13F63A4784B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Domain", "Notes.Domain\Notes.Domain.csproj", "{C17FAFFB-86BE-4251-BB79-B527EC76771E}"
 EndProject
