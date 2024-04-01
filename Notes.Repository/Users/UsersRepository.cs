@@ -4,19 +4,12 @@ using Notes.Repository.Abstracion;
 
 namespace Notes.Repository.Users
 {
-    public class UsersRepository : IUsersRepository
+    public class UsersRepository(NotesContext context) : IUsersRepository
     {
-        private readonly NotesContext _context;
-
-        public UsersRepository(NotesContext context)
-        {
-            _context = context;
-        }
-
         public async Task<Result<User>> CreateUser(User user)
         {
             var result = new Result<User>();
-            var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
+            var exitingUser = await context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
 
             if (exitingUser != null)
             {
@@ -24,8 +17,8 @@ namespace Notes.Repository.Users
                 return result;
             }
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
             result.Value = user;
 
             return result;
@@ -33,13 +26,13 @@ namespace Notes.Repository.Users
 
         public async Task<ICollection<User>> GetAllUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await context.Users.ToListAsync();
         }
 
         public async Task<Result<User>> GetUser(int userid)
         {
             var result = new Result<User>();
-            result.Value = await _context.Users.FirstOrDefaultAsync(x => x.Id == userid);
+            result.Value = await context.Users.FirstOrDefaultAsync(x => x.Id == userid);
             if (result.Value == null)
             {
                 result.Status = Status.NotFound;
@@ -60,7 +53,7 @@ namespace Notes.Repository.Users
                 return result;
             }
 
-            _context.Users.Remove(result.Value);
+            context.Users.Remove(result.Value);
             return result;
         }
 
@@ -73,12 +66,12 @@ namespace Notes.Repository.Users
                 return result;
             }
 
-            var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
+            var exitingUser = await context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
 
-            if (exitingUser == null) await _context.Users.AddAsync(user);
+            if (exitingUser == null) await context.Users.AddAsync(user);
             else exitingUser = user;
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return result;
         }

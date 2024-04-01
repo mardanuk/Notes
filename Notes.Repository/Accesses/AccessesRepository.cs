@@ -4,31 +4,24 @@ using Notes.Repository.Abstracion;
 
 namespace Notes.Repository.Accesses
 {
-    public class AccessesRepository : IAccessesRepository
+    public class AccessesRepository(NotesContext context) : IAccessesRepository
     {
-        private readonly NotesContext _context;
-
-        public AccessesRepository(NotesContext context)
-        {
-            _context = context;
-        }
-
         public async Task<bool> AddAccess(string header, int userid)
         {
-            var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == userid);
-            var exitingNote = await _context.Notes.SingleOrDefaultAsync(x => x.Header == header);
+            var exitingUser = await context.Users.SingleOrDefaultAsync(x => x.Id == userid);
+            var exitingNote = await context.Notes.SingleOrDefaultAsync(x => x.Header == header);
 
             if (exitingUser == null || exitingNote == null) return false;
 
             exitingNote.Users.Add(exitingUser);
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return true;
         }
 
         public async Task<ICollection<User>?> GetUsers(string header)
         {
-            var exitingNote = await _context.Notes.SingleOrDefaultAsync(x => x.Header == header);
+            var exitingNote = await context.Notes.SingleOrDefaultAsync(x => x.Header == header);
 
             if (exitingNote == null) return null;
 
@@ -37,7 +30,7 @@ namespace Notes.Repository.Accesses
 
         public async Task<ICollection<Note>?> GetNotes(int userid)
         {
-            var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == userid);
+            var exitingUser = await context.Users.SingleOrDefaultAsync(x => x.Id == userid);
 
             if (exitingUser == null) return null;
 

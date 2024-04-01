@@ -6,26 +6,17 @@ using Notes.Repository.Abstracion;
 
 namespace Notes.Repository.Notes
 {
-    public class NotesRepository : INotesRepository
+    public class NotesRepository(NotesContext context, IOptions<PageConfiguration> configuration) : INotesRepository
     {
-        private readonly NotesContext _context;
-        private readonly IOptions<PageConfiguration> _configuration;
-
-        public NotesRepository(NotesContext context, IOptions<PageConfiguration> configuration)
-        {
-            _context = context;
-            _configuration = configuration;
-        }
-
         public async Task<ICollection<Note>> GetAllNotes()
         {
-            return await _context.Notes.Take(_configuration.Value.PageCapacity).ToListAsync();
+            return await context.Notes.Take(configuration.Value.PageCapacity).ToListAsync();
         }
 
         public async Task<Result<Note>> CreateNote(Note note)
         {
             Result<Note> result = new Result<Note>();
-            var exitingNote = await _context.Notes.SingleOrDefaultAsync(x => x.Header == note.Header);
+            var exitingNote = await context.Notes.SingleOrDefaultAsync(x => x.Header == note.Header);
 
             if (exitingNote != null)
             {
@@ -33,8 +24,8 @@ namespace Notes.Repository.Notes
                 return result;
             }
 
-            await _context.Notes.AddAsync(note);
-            await _context.SaveChangesAsync();
+            await context.Notes.AddAsync(note);
+            await context.SaveChangesAsync();
             result.Value = note;
 
             return result;
@@ -53,14 +44,14 @@ namespace Notes.Repository.Notes
                 return result;
             }
 
-            _context.Notes.Remove(result.Value);
+            context.Notes.Remove(result.Value);
             return result;
         }
 
         public async Task<Result<Note>> GetNote(string header)
         {
             Result<Note> result = new Result<Note>();
-            result.Value = await _context.Notes.FirstOrDefaultAsync(x => x.Header == header);
+            result.Value = await context.Notes.FirstOrDefaultAsync(x => x.Header == header);
             if (result.Value == null)
             {
                 result.Status = Status.NotFound;
@@ -77,12 +68,12 @@ namespace Notes.Repository.Notes
                 return result;
             }
 
-            var exitingNote = await _context.Notes.SingleOrDefaultAsync(x => x.Header == note.Header);
+            var exitingNote = await context.Notes.SingleOrDefaultAsync(x => x.Header == note.Header);
 
-            if (exitingNote == null) await _context.Notes.AddAsync(note);
+            if (exitingNote == null) await context.Notes.AddAsync(note);
             else exitingNote = note;
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return result;
         }
