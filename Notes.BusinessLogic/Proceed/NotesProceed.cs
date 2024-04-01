@@ -10,7 +10,7 @@ namespace Notes.BusinessLogic.Proceed
         private readonly INotesRepository _repository;
         private readonly IValidator<Note> _noteValidator;
 
-        public NotesProceed(INotesRepository repository, IValidator<Note> noteValidator) 
+        public NotesProceed(INotesRepository repository, IValidator<Note> noteValidator)
         {
             _repository = repository;
             _noteValidator = noteValidator;
@@ -23,7 +23,7 @@ namespace Notes.BusinessLogic.Proceed
         public async Task<Result<Note>> CreateNote(Note note)
         {
             return _noteValidator.Validate(note).IsValid
-                ? await _repository.CreateNote(note) 
+                ? await _repository.CreateNote(note)
                 : new Result<Note>() { Status = Status.NotValid };
         }
         /// <summary>
@@ -46,14 +46,18 @@ namespace Notes.BusinessLogic.Proceed
                 : await _repository.GetNote(header);
         }
 
-        Task<Result<Note>> INotesProceed.DeleteNote(string header)
+        public async Task<Result<Note>> DeleteNote(string header)
         {
-            throw new NotImplementedException();
+            return string.IsNullOrWhiteSpace(header)
+                ? new Result<Note>() { Status = Status.NotValid }
+                : await _repository.DeleteNote(header);
         }
 
-        Task<Result<Note>> INotesProceed.UpdateNote(Note note)
+        public async Task<Result<Note>> UpdateNote(Note note)
         {
-            throw new NotImplementedException();
+            return _noteValidator.Validate(note).IsValid
+                ? await _repository.UpdateNote(note)
+                : new Result<Note>() { Status = Status.NotValid };
         }
     }
 }

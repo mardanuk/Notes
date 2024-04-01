@@ -3,6 +3,7 @@ using Notes.BusinessLogic.Abstraction;
 using Mapster;
 using Presentation.DTOs;
 using Notes.Domain;
+using Notes.BusinessLogic.Proceed;
 
 namespace Presentation.Controllers
 {
@@ -33,12 +34,28 @@ namespace Presentation.Controllers
             return Ok(note.Value?.Adapt<NoteDto>());
         }
 
+        // POST notes/
+        [HttpPost]
+        public async Task<ActionResult> Post(NoteDto note)
+        {
+            var _note = await _notesProceed.CreateNote(note.Adapt<Note>());
+            return Ok(_note.Value?.Adapt<NoteDto>());
+        }
+
         // PUT notes/
         [HttpPut]
         public async Task<ActionResult> Put(NoteDto note)
         {
-            var _note = await _notesProceed.CreateNote(note.Adapt<Note>());
-            return Ok(_note.Value?.Adapt<NoteDto>());
+            var _note = await _notesProceed.UpdateNote(note.Adapt<Note>());
+            return Ok(_note.Adapt<NoteDto>());
+        }
+
+        // DELETE notes/note0
+        [HttpDelete("{header}")]
+        public async Task<ActionResult> Delete(string header)
+        {
+            var _note = await _notesProceed.DeleteNote(header);
+            return Ok(_note.Adapt<NoteDto>());
         }
     }
 }
