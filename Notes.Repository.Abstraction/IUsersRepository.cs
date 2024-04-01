@@ -5,7 +5,9 @@ namespace Notes.Repository.Abstracion
     public interface IUsersRepository
     {
         Task<ICollection<User>> GetAllUsers();
-        Task<User?> GetUser(int userid);
-        Task<User?> CreateUser(User user);
+        Task<Result<User>> GetUser(int userid);
+        Task<Result<User>> CreateUser(User user);
+        Task<Result<User>> UpdateNote(User user);
+        Task<Result<User>> DeleteNote(int userid);
     }
 }

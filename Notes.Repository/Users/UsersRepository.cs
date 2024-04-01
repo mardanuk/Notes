@@ -1,6 +1,7 @@
 ﻿using Notes.Domain;
 using Microsoft.EntityFrameworkCore;
 using Notes.Repository.Abstracion;
+using System.Reflection.PortableExecutable;
 
 namespace Notes.Repository.Users
 {
@@ -13,16 +14,22 @@ namespace Notes.Repository.Users
             _context = context;
         }
 
-        public async Task<User?> CreateUser(User user)
+        public async Task<Result<User>> CreateUser(User user)
         {
+            var result = new Result<User>();
             var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
 
-            if (exitingUser != null) return null;
+            if (exitingUser != null)
+            {
+                result.Status = Status.ExistingValue;
+                return result;
+            }
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            result.Value = user;
 
-            return user;
+            return result;
         }
 
         public async Task<ICollection<User>> GetAllUsers()
@@ -30,9 +37,51 @@ namespace Notes.Repository.Users
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User?> GetUser(int userid)
+        public async Task<Result<User>> GetUser(int userid)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == userid);
+            var result = new Result<User>();
+            result.Value = await _context.Users.FirstOrDefaultAsync(x => x.Id == userid);
+            if (result.Value == null)
+            {
+                result.Status = Status.NotFound;
+            }
+            return result;
+        }
+
+        public async Task<Result<User>> DeleteNote(int userid)
+        {
+            Result<User> result = await GetUser(userid);
+            if (result.Status != Status.Ok)
+            {
+                return result;
+            }
+            else if (result.Value == null)
+            {
+                result.Status = Status.Undefined;
+                return result;
+            }
+
+            _context.Users.Remove(result.Value);
+            return result;
+        }
+
+        public async Task<Result<User>> UpdateNote(User user)
+        {
+            Result<User> result = new Result<User>();
+            if (user == null)
+            {
+                result.Status = Status.NullValue;
+                return result;
+            }
+
+            var exitingUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
+
+            if (exitingUser == null) await _context.Users.AddAsync(user);
+            else exitingUser = user;
+
+            await _context.SaveChangesAsync();
+
+            return result;
         }
     }
 }

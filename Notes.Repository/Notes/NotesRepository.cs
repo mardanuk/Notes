@@ -29,7 +29,7 @@ namespace Notes.Repository.Notes
 
             if (exitingNote != null)
             {
-                result.Status = Status.NullValue;
+                result.Status = Status.ExistingValue;
                 return result;
             }
 
@@ -42,16 +42,18 @@ namespace Notes.Repository.Notes
 
         public async Task<Result<Note>> DeleteNote(string header)
         {
-            Result<Note> result = new Result<Note>();
-            var exitingNote = (await GetNote(header)).Value;
-            if (exitingNote != null)
+            Result<Note> result = await GetNote(header);
+            if (result.Status != Status.Ok)
             {
-                _context.Notes.Remove(exitingNote);
+                return result;
             }
-            else
+            else if (result.Value == null) 
             {
-                result.Status = Status.NotFound;
+                result.Status = Status.Undefined; 
+                return result;
             }
+
+            _context.Notes.Remove(result.Value);
             return result;
         }
 

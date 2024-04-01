@@ -6,6 +6,7 @@
         NullValue,
         Undefined,
         NotValid,
+        ExistingValue,
         Ok
     }
 }
