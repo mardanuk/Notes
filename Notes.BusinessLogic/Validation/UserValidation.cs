@@ -8,6 +8,7 @@ namespace Notes.BusinessLogic.Validation
         public UserValidator()
         {
             RuleFor(user => user.Name).NotEmpty();
+            RuleFor(user => user.Id).GreaterThanOrEqualTo(0);
         }
     }
 }

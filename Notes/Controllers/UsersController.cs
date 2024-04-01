@@ -33,11 +33,27 @@ namespace Presentation.Controllers
             return Ok(user.Adapt<UserDto>());
         }
 
+        // POST users/
+        [HttpPost]
+        public async Task<ActionResult> Post(UserDto user)
+        {
+            var _user = await _usersProceed.CreateUser(user.Adapt<User>());
+            return Ok(_user.Adapt<UserDto>());
+        }
+
         // PUT users/
         [HttpPut]
         public async Task<ActionResult> Put(UserDto user)
         {
-            var _user = await _usersProceed.CreateUser(user.Adapt<User>());
+            var _user = await _usersProceed.UpdateUser(user.Adapt<User>());
+            return Ok(_user.Adapt<UserDto>());
+        }
+
+        // DELETE users/3
+        [HttpDelete("{userid}")]
+        public async Task<ActionResult> Delete(int userid)
+        {
+            var _user = await _usersProceed.DeleteUser(userid);
             return Ok(_user.Adapt<UserDto>());
         }
     }

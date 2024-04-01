@@ -2,6 +2,7 @@
 using Notes.BusinessLogic.Abstraction;
 using Notes.Domain;
 using Notes.Repository.Abstracion;
+using System.Reflection.PortableExecutable;
 
 namespace Notes.BusinessLogic.Proceed
 {
@@ -16,11 +17,11 @@ namespace Notes.BusinessLogic.Proceed
             _userValidator = userValidator;
         }
 
-        public async Task<User?> CreateUser(User user)
+        public async Task<Result<User>> CreateUser(User user)
         {
             return _userValidator.Validate(user).IsValid
-               ? await _repository.CreateUser(user)
-               : null;
+                ? await _repository.CreateUser(user)
+                : new Result<User>() { Status = Status.NotValid };
         }
 
         public async Task<ICollection<User>> GetAllUsers()
@@ -28,9 +29,25 @@ namespace Notes.BusinessLogic.Proceed
             return await _repository.GetAllUsers();
         }
 
-        public async Task<User?> GetUser(int userid)
+        public async Task<Result<User>> GetUser(int userid)
         {
-            return await _repository.GetUser(userid);
+            return userid >= 0 ?
+                await _repository.GetUser(userid) :
+                new Result<User>() { Status = Status.NotValid };
+        }
+
+        public async Task<Result<User>> DeleteUser(int userid)
+        {
+            return userid >= 0 ?
+                await _repository.DeleteUser(userid) :
+                new Result<User>() { Status = Status.NotValid };
+        }
+
+        public async Task<Result<User>> UpdateUser(User user)
+        {
+            return _userValidator.Validate(user).IsValid
+                ? await _repository.UpdateUser(user)
+                : new Result<User>() { Status = Status.NotValid };
         }
     }
 }

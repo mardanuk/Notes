@@ -1,7 +1,6 @@
 ﻿using Notes.Domain;
 using Microsoft.EntityFrameworkCore;
 using Notes.Repository.Abstracion;
-using System.Reflection.PortableExecutable;
 
 namespace Notes.Repository.Users
 {
@@ -48,7 +47,7 @@ namespace Notes.Repository.Users
             return result;
         }
 
-        public async Task<Result<User>> DeleteNote(int userid)
+        public async Task<Result<User>> DeleteUser(int userid)
         {
             Result<User> result = await GetUser(userid);
             if (result.Status != Status.Ok)
@@ -65,7 +64,7 @@ namespace Notes.Repository.Users
             return result;
         }
 
-        public async Task<Result<User>> UpdateNote(User user)
+        public async Task<Result<User>> UpdateUser(User user)
         {
             Result<User> result = new Result<User>();
             if (user == null)
