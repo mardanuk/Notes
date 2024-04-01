@@ -71,7 +71,7 @@ namespace Notes.Repository.Notes
             var exitingNote = await context.Notes.SingleOrDefaultAsync(x => x.Header == note.Header);
 
             if (exitingNote == null) await context.Notes.AddAsync(note);
-            else exitingNote = note;
+            else exitingNote.Text = note.Text;
 
             await context.SaveChangesAsync();
 

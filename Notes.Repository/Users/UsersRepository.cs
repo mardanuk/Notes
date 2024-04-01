@@ -69,7 +69,7 @@ namespace Notes.Repository.Users
             var exitingUser = await context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
 
             if (exitingUser == null) await context.Users.AddAsync(user);
-            else exitingUser = user;
+            else exitingUser.Name = user.Name;
 
             await context.SaveChangesAsync();
 
