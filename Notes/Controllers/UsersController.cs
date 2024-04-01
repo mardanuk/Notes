@@ -29,7 +29,7 @@ namespace Presentation.Controllers
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
             logger.Log(LogLevel.Information, logText);
 
-            return Ok(result.Value.Adapt<UserDto>());
+            return Ok(result.Value?.Adapt<UserDto>());
         }
 
         // POST users/
@@ -41,7 +41,7 @@ namespace Presentation.Controllers
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
             logger.Log(LogLevel.Information, logText);
 
-            return Ok(result.Value.Adapt<UserDto>());
+            return Ok();
         }
 
         // PUT users/
@@ -53,7 +53,7 @@ namespace Presentation.Controllers
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
             logger.Log(LogLevel.Information, logText);
 
-            return Ok(result.Value.Adapt<UserDto>());
+            return Ok();
         }
 
         // DELETE users/3
@@ -65,7 +65,7 @@ namespace Presentation.Controllers
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
             logger.Log(LogLevel.Information, logText);
 
-            return Ok(result.Value.Adapt<UserDto>());
+            return Ok();
         }
     }
 }
