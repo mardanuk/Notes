@@ -26,8 +26,8 @@ namespace Presentation.Controllers
         {
             var result = await _usersProceed.GetUser(userid);
 
-            string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
-            logger.Log(LogLevel.Information, logText);
+            string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status);
+            logger.Log(LogLevel.Information, "{0}. Userid = {1}",logText, userid);
 
             return Ok(result.Value?.Adapt<UserDto>());
         }
@@ -39,7 +39,7 @@ namespace Presentation.Controllers
             var result = await _usersProceed.CreateUser(user.Adapt<User>());
 
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
-            logger.Log(LogLevel.Information, logText);
+            logger.Log(LogLevel.Information, "{0}. Userid = {1}", logText, user.Id);
 
             return Ok();
         }
@@ -51,7 +51,7 @@ namespace Presentation.Controllers
             var result = await _usersProceed.UpdateUser(user.Adapt<User>());
 
             string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
-            logger.Log(LogLevel.Information, logText);
+            logger.Log(LogLevel.Information, "{0}. Userid = {1}", logText, user.Id);
 
             return Ok();
         }
@@ -62,8 +62,8 @@ namespace Presentation.Controllers
         {
             var result = await _usersProceed.DeleteUser(userid);
 
-            string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status, "user");
-            logger.Log(LogLevel.Information, logText);
+            string logText = ErrorHandler.ErrorHandler.GetResultStatus(result.Status);
+            logger.Log(LogLevel.Information, "{0}. Userid = {1}", logText, userid);
 
             return Ok();
         }
